@@ -1,0 +1,23 @@
+
+# Brightness control
+
+"xbacklight -inc 1"
+XF86MonBrightnessUp
+
+"xbacklight -dec 2"
+XF86MonBrightnessDown
+
+# MPD control
+
+"mpc prev"
+XF86AudioPrev
+
+"mpc play"
+XF86AudioPlay
+
+#not working
+"mpc pause"
+XF86AudioPause
+
+"mpc next"
+XF86AudioNext
