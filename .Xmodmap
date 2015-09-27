@@ -1,0 +1,5 @@
+! Use PrintSrc as Menu key
+keycode 107 = Menu NoSymbol Menu
+
+! Use < key as Compose Key
+keycode 94 = Multi_key
