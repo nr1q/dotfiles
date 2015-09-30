@@ -10,7 +10,6 @@
 
     syntax on
     colorscheme nrq_colors
-    :AirlineTheme powerlineish
 
     set nocompatible    " let's be iMproved
     set t_Co=256        " enable 256 colors
@@ -61,6 +60,7 @@
     filetype plugin indent on
 
     " enabling Powerline fonts
+    let g:airline_theme = "powerlineish"
     let g:airline_powerline_fonts = 1
 
     " turn on case sensitive feature
