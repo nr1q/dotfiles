@@ -13,6 +13,29 @@ setenv EDITOR vim
 
 # -- FUNCTIONS
 
+function set_custom_colors --description 'My custom fish colors'
+    set fish_color_autosuggestion  ffffff
+    set fish_color_command         626262
+    set fish_color_comment         87d700
+    set fish_color_cwd             green
+    set fish_color_cwd_root        red
+    set fish_color_end             ff0
+    set fish_color_error           ff8700
+    set fish_color_escape          cyan
+    set fish_color_history_current cyan
+    set fish_color_host            cyan --bold
+    set fish_color_match           cyan
+    set fish_color_normal          normal
+    set fish_color_operator        ffd700 --bold
+    set fish_color_param           b2b2b2
+    set fish_color_quote           ffffff
+    set fish_color_redirection     0087ff
+    set fish_color_search_match    --bold --background=ff5f00
+    set fish_color_status          red
+    set fish_color_user            green --bold
+    set fish_color_valid_path      ffffff --underline
+end
+
 function prompt_pwd --description 'Print the current working directory, NOT shortened to fit the prompt'
     if test "$PWD" != "$HOME"
         printf "%s" (echo $PWD|sed -e 's|/private||' -e "s|^$HOME|~|")
