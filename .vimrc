@@ -9,7 +9,8 @@
 " ------------------------------------------------------------------------ {{{
 
     syntax on
-    colorscheme vylight
+    colorscheme nrq_colors
+    :AirlineTheme powerlineish
 
     set nocompatible    " let's be iMproved
     set t_Co=256        " enable 256 colors
@@ -25,6 +26,7 @@
     set incsearch       " search while typing
     set ignorecase      " ignore upper case search strings
     set smartcase       " override ignore when upper case in search
+    set colorcolumn=80  " avoid lines longer than 80 chars
 
     " allow backspacing over autoindent, line breaks and start of insert action
     set backspace=indent,eol,start
@@ -117,6 +119,15 @@
 
     let g:airline#extensions#tabline#enabled = 1
 
+    "let g:syntastic_cpp_no_include_search = 1
+    "let g:syntastic_cpp_auto_refresh_includes = 1
+    "let g:syntastic_cpp_remove_include_errors = 1
+    "let g:syntastic_cpp_include_dirs = ['/nrq/of08464/libs/openFrameworks/']
+
+    " Fish shell doesn't support the standard
+    " UNIX syntax for file redirections
+    let g:syntastic_shell = "/bin/bash"
+
     " would be nice to custom this part…
     " check the :help for this variable
     let g:syntastic_quiet_messages = {
@@ -154,8 +165,11 @@
     " CTags
     autocmd FileType c,cc,cpp,h,hpp set tags +=~/.vim/tags/cpp
 
-    " script runners
-    autocmd FileType python nnoremap <buffer> <F5> :exec '!clear;python' shellescape(@%, 1)<cr>
+    " compile and run
+    "autocmd FileType python nnoremap <buffer> <F4> :exec '!clear;python' shellescape(@%, 1)<cr> " old one
+    autocmd FileType python nnoremap <buffer> <F4> :w <bar> exec '!python '.shellescape('%')<CR>
+    autocmd FileType c nnoremap <F4> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
+    autocmd FileType cpp nnoremap <F4> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
 
     " indentation for C and CPP
     "autocmd FileType c,cc,cpp,h,hpp,php set cindent
@@ -267,7 +281,7 @@
 " ------------------------------------------------------------------------ {{{
 
     " show highlighting groups for current word
-    nmap <C-S-P> :call <SID>SynStack()<CR>
+    nmap <C-S-G> :call <SID>SynStack()<CR>
     function! <SID>SynStack()
         if !exists("*synstack")
             return

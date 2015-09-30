@@ -17,40 +17,41 @@ URxvt*boldFont: xft:Terminess Powerline:pixelsize=16:bold:antialias=false
 ! Colours !
 !---------!
 
-*background: #242424
-*foreground: #e2e2e2
+*.background:  #242424
+*.foreground:  #e2e2e2
+*.cursorColor: #e2e2e2
 
 ! Black
-*color0:    #000000
-*color8:    #000000
+*.color0:    #000000
+*.color8:    #000000
 
 ! Red
-*color1:    #ff5d28
-*color9:    #ff5d28
+*.color1:    #ff5d28
+*.color9:    #ff5d28
 
 ! Green
-*color2:    #b1d631
-*color10:   #b1d631
+*.color2:    #b1d631
+*.color10:   #b1d631
 
 ! Yellow
-*color3:    #ffd700
-*color11:   #ffd700
+*.color3:    #ffd700
+*.color11:   #ffd700
 
 ! Blue
-*color4:    #0087ff
-*color12:   #0087ff
+*.color4:    #0087ff
+*.color12:   #0087ff
 
 ! Magenta
-*color5:    #af5f5f
-*color13:   #af5f5f
+*.color5:    #af5f5f
+*.color13:   #af5f5f
 
 ! Cyan
-*color6:    #acf0f2
-*color14:   #acf0f2
+*.color6:    #acf0f2
+*.color14:   #acf0f2
 
 ! White
-*color7:    #ffffff
-*color15:   #ffffff
+*.color7:    #ffffff
+*.color15:   #ffffff
 
 
 !-------!
