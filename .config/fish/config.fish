@@ -4,16 +4,16 @@
 #                    ╚   ╩ ╚═╝ ╩ ╩    ╚═╝ ╚═╝ ╝╚╝ ╚   ╩ ╚═╝
 #
 
-# turn off greeting
+# no greeting
 set fish_greeting
 
-# vim for the win
 setenv EDITOR vim
+setenv GPG_TTY (tty)
 
 
 # -- FUNCTIONS
 
-function set_custom_colors --description 'My custom fish colors'
+function fish_colors --description 'Set my custom fish colors'
     set fish_color_autosuggestion  ffffff
     set fish_color_command         626262
     set fish_color_comment         87d700
@@ -30,7 +30,9 @@ function set_custom_colors --description 'My custom fish colors'
     set fish_color_param           b2b2b2
     set fish_color_quote           ffffff
     set fish_color_redirection     0087ff
-    set fish_color_search_match    --bold --background=ff5f00
+    # https://github.com/fish-shell/fish-shell/issues/2442
+    #set fish_color_search_match    af0000 --bold --background=ff5f00
+    set fish_color_search_match    --background=ff5f00
     set fish_color_status          red
     set fish_color_user            green --bold
     set fish_color_valid_path      ffffff --underline

@@ -2,11 +2,9 @@
 "                             ╦  ╦ ╦ ╔╦╗ ╦═╗ ╔═╗
 "                             ╚╗╔╝ ║ ║║║ ╠╦╝ ║
 "                              ╚╝  ╩ ╩ ╩ ╩╚═ ╚═╝
-"                           Nr!q's favorite config
 "
 
-" ## GENERAL
-" ------------------------------------------------------------------------ {{{
+" {{{ GENERAL
 
     syntax on
     colorscheme nrq_colors
@@ -25,7 +23,7 @@
     set incsearch       " search while typing
     set ignorecase      " ignore upper case search strings
     set smartcase       " override ignore when upper case in search
-    set colorcolumn=80  " avoid lines longer than 80 chars
+    "set colorcolumn=80  " draw a line at the column limit
 
     " allow backspacing over autoindent, line breaks and start of insert action
     set backspace=indent,eol,start
@@ -50,8 +48,7 @@
 
 " }}}
 
-" ## PLUGINS AND SETTINGS
-" ------------------------------------------------------------------------ {{{
+" {{{ PLUGINS AND SETTINGS
 
     " Tim Pope's
     execute pathogen#infect()
@@ -150,8 +147,7 @@
 
 " }}}
 
-" ## AUTOCOMMANDS
-" ------------------------------------------------------------------------ {{{
+" {{{ AUTOCOMMANDS
 
     " remove trailing spaces on save
     autocmd BufWritePre * :%s/\s\+$//e
@@ -185,8 +181,7 @@
 
 " }}}
 
-" ## MAPPINGS
-" ------------------------------------------------------------------------ {{{
+" {{{ MAPPINGS
 
     " making Y act like D or C
     map Y y$
@@ -277,8 +272,7 @@
 
 " }}}
 
-" ## FUNCTIONS
-" ------------------------------------------------------------------------ {{{
+" {{{ FUNCTIONS
 
     " show highlighting groups for current word
     nmap <C-S-G> :call <SID>SynStack()<CR>
