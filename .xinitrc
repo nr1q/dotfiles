@@ -23,5 +23,8 @@ urxvtd -q -o -f
 # start the color temperature adjuster
 redshift -l 19.43250:-99.13537 &
 
+# enable transparency
+unagi &
+
 # run this lovely window manager
 exec awesome

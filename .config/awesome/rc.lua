@@ -16,9 +16,6 @@ local naughty = require("naughty")
 local vicious = require("vicious")
 local menubar = require("menubar")
 
--- Transparency
-awful.util.spawn_with_shell("unagi &")
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
