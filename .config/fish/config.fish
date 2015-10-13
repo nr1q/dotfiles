@@ -1,17 +1,10 @@
-#
-#                    ╔═╗ ╦ ╔═╗ ╦ ╦    ╔═╗ ╔═╗ ╔╗╔ ╔═╗ ╦ ╔═╗
-#                    ╠╣  ║ ╚═╗ ╠═╣    ║   ║ ║ ║║║ ╠╣  ║ ║ ╦
-#                    ╚   ╩ ╚═╝ ╩ ╩    ╚═╝ ╚═╝ ╝╚╝ ╚   ╩ ╚═╝
-#
 
-# no greeting
 set fish_greeting
 
 setenv EDITOR vim
 setenv GPG_TTY (tty)
 
-
-# -- FUNCTIONS
+# FUNCTIONS {{{
 
 function fish_colors --description 'Set my custom fish colors'
     set fish_color_autosuggestion  ffffff
@@ -46,8 +39,9 @@ function prompt_pwd --description 'Print the current working directory, NOT shor
     end
 end
 
+# }}}
 
-# -- ALIASES
+# ALIASES {{{
 
 alias v vim
 alias g git
@@ -60,8 +54,18 @@ function ls --description 'List colored contents of directory'
     command ls $param $argv
 end
 
+function ranger-cd --description 'Keep last directory on exit'
+    set -l tempfile '/tmp/ranger-choosedir'
+    /usr/bin/ranger --choosedir=/tmp/ranger-choosedir
+    if test -f $tempfile; and test (cat $tempfile) != (echo -n (pwd))
+        cd (cat $tempfile)
+    end
+    rm $tempfile
+end
 
-# -- PROMPT
+# }}}
+
+# PROMPT {{{
 
 function fish_prompt --description 'Write out the prompt'
 
@@ -105,6 +109,7 @@ function fish_prompt --description 'Write out the prompt'
     end
 end
 
+# }}}
 
 # start X at login
 if status --is-login
@@ -112,4 +117,6 @@ if status --is-login
         exec startx -- -keeptty
     end
 end
+
+# vim:foldmethod=marker:foldlevel=0
 
