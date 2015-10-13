@@ -49,16 +49,15 @@ end
 
 # -- ALIASES
 
+alias v vim
+alias g git
+
 function ls --description 'List colored contents of directory'
     set -l param --human-readable --group-directories-first --color=auto
     if isatty 1
         set param $param --indicator-style=classify
     end
     command ls $param $argv
-end
-
-function svim --description "Alias: sudo vim [args]"
-    sudo vim $argv
 end
 
 
