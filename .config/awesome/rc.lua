@@ -503,12 +503,12 @@ awful.rules.rules = {
         client:geometry( {x=33, y=47, width=1300, height=640} )
       end },
 
-    { rule       = { class = "Chromium" },
+    { rule       = { class = "chromium" },
       properties = { tag = tags[1][2],
                    border_width = 0 } },
-    { rule       = { role = "Browser", class = "Chromium" },
+    { rule       = { role = "Browser", class = "chromium" },
       properties = { floating = false, maximized = true } },
-    { rule       = { role = "pop-up", class = "Chromium" },
+    { rule       = { role = "pop-up", class = "chromium" },
       properties = { floating = true } },
 
 }
