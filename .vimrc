@@ -1,8 +1,3 @@
-"
-"                             ╦  ╦ ╦ ╔╦╗ ╦═╗ ╔═╗
-"                             ╚╗╔╝ ║ ║║║ ╠╦╝ ║
-"                              ╚╝  ╩ ╩ ╩ ╩╚═ ╚═╝
-"
 
 " {{{ GENERAL
 
@@ -45,6 +40,9 @@
 
     " list invisible chars
     set listchars=tab:▸\ ,space:\ ,extends:▸,precedes:◂,eol:¬
+
+    " symmetric encryption
+    set cryptmethod=blowfish2
 
 " }}}
 
