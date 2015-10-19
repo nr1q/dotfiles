@@ -1,4 +1,3 @@
-
 # Brightness control
 
 "xbacklight -inc 1"
@@ -21,4 +20,3 @@ XF86AudioPause
 
 "mpc next"
 XF86AudioNext
-

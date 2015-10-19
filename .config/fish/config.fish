@@ -1,4 +1,3 @@
-
 set fish_greeting
 
 setenv EDITOR vim
@@ -119,4 +118,3 @@ if status --is-login
 end
 
 # vim:foldmethod=marker:foldlevel=0
-

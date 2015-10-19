@@ -1,4 +1,3 @@
-
 " {{{ GENERAL
 
     syntax on
@@ -322,4 +321,3 @@
 " }}}
 
 " vim: foldmethod=marker :foldlevel=0
-
