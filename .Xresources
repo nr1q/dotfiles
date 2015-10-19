@@ -1,10 +1,13 @@
+
 !-------!
 ! Fonts !
 !-------!
 
 Xft*dpi:        96
-URxvt*font:     xft:Terminess Powerline:pixelsize=16:antialias=false
-URxvt*boldFont: xft:Terminess Powerline:pixelsize=16:bold:antialias=false
+URxvt*font:     xft:Terminus:pixelsize=16:antialias=false
+URxvt*boldFont: xft:Terminus:pixelsize=16:bold:antialias=false
+!URxvt*font:     xft:Terminess Powerline:pixelsize=16:antialias=false
+!URxvt*boldFont: xft:Terminess Powerline:pixelsize=16:bold:antialias=false
 
 
 !---------!

@@ -43,9 +43,9 @@ end
 -- {{{ Variable definitions
 
 -- Themes define colours, icons, and wallpapers
-config_dir = (os.getenv('HOME') .. "/.config/awesome/")
+config_dir = (os.getenv('HOME') .. "/.config/awesome")
 themes_dir = (config_dir .. "/themes")
-beautiful.init(themes_dir .. "/hnrch/theme.lua")
+beautiful.init(themes_dir .. "/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvtc -bc"
@@ -163,7 +163,7 @@ end
 mailWidget = wibox.widget.textbox()
 mailWidgetTimer = timer({ timeout = 1800 })
 mailWidgetTimer:connect_signal("timeout", f_mailWidget)
-mailWidgetTimer:start()
+--mailWidgetTimer:start()
 --f_mailWidget() -- check mail now, or wait timeout event
 -- TODO use this instead of the above
 --mailWidget = lain.widgets.imap({server='imap.openmailbox.org',
@@ -593,35 +593,35 @@ end)
 
 -- opacity personalization
 
-client.connect_signal("focus", function(c)
-    c.border_color = beautiful.border_focus
-    if c.class ~= "URxvt" then
-        c.opacity = 1.0
-    end
-end)
+-- client.connect_signal("focus", function(c)
+    -- c.border_color = beautiful.border_focus
+    -- if c.class ~= "URxvt" then
+        -- c.opacity = 1.0
+    -- end
+-- end)
 
-client.connect_signal("unfocus", function(c)
-    c.border_color = beautiful.border_normal
-    if c.class ~= "URxvt" and
-       c.class ~= "Vlc" and
-       c.class ~= "MPlayer" and c.name ~= "Electric Sheep" then
-        c.opacity = 0.6
-    end
-end)
+-- client.connect_signal("unfocus", function(c)
+    -- c.border_color = beautiful.border_normal
+    -- if c.class ~= "URxvt" and
+       -- c.class ~= "Vlc" and
+       -- c.class ~= "MPlayer" and c.name ~= "Electric Sheep" then
+        -- c.opacity = 0.6
+    -- end
+-- end)
 
 -- no borders on maximized terminals
 
-client.connect_signal("property::maximized", function(c)
-    if c.class == "URxvt" and c.maximized then
-        c.border_width = 0
-    end
-end)
+-- client.connect_signal("property::maximized", function(c)
+    -- if c.class == "URxvt" and c.maximized then
+        -- c.border_width = 0
+    -- end
+-- end)
 
-client.connect_signal("property::floating", function(c)
-    if c.class == "URxvt" then
-        c.border_width = 2
-    end
-end)
+-- client.connect_signal("property::floating", function(c)
+    -- if c.class == "URxvt" then
+        -- c.border_width = 2
+    -- end
+-- end)
 
 -- }}}
 

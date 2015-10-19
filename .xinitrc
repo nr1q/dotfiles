@@ -1,29 +1,38 @@
 #!/bin/bash
 
-# update X resources db
-xrdb -merge ~/.Xresources
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
 
-# update key mappings
-if [ -s ~/.Xmodmap  ]; then
-    xmodmap ~/.Xmodmap
+# merge in defaults and keymaps
+
+if [ -f "$userresources" ]; then
+    xrdb -merge "$userresources"
 fi
+
+if [ -f "$usermodmap" ]; then
+    xmodmap "$usermodmap"
+fi
+
+# start some nice programs
 
 # disable touchpad click while typing
 syndaemon -t -k -i 2 -d &
 
-# start keyboard daemon
-kbdd &
-
-# run this to enable brightness keys
+# enable some fn keys
 xbindkeys
 
-# start rxvt-unicode daemon
-urxvtd -q -o -f
+# keyboard daemon
+kbdd &
 
-# start the color temperature adjuster
+# colour temperature adjuster
 redshift -l 19.43250:-99.13537 &
 
-# enable transparency
-unagi &
+# terminal daemon
+urxvtd -q -o -f
 
-exec awesome
+# enable transparency
+#unagi &
+
+# remove exec to leave in prompt when exiting awesome
+#exec awesome
+awesome
