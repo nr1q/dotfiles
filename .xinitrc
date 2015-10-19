@@ -18,9 +18,6 @@ fi
 # disable touchpad click while typing
 syndaemon -t -k -i 2 -d &
 
-# enable some fn keys
-xbindkeys
-
 # keyboard daemon
 kbdd &
 
@@ -31,8 +28,6 @@ redshift -l 19.43250:-99.13537 &
 urxvtd -q -o -f
 
 # enable transparency
-#unagi &
+unagi &
 
-# remove exec to leave in prompt when exiting awesome
-#exec awesome
-awesome
+exec awesome

@@ -45,7 +45,7 @@ end
 -- Themes define colours, icons, and wallpapers
 config_dir = (os.getenv('HOME') .. "/.config/awesome")
 themes_dir = (config_dir .. "/themes")
-beautiful.init(themes_dir .. "/default/theme.lua")
+beautiful.init(themes_dir .. "/hnrch/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvtc -bc"
@@ -163,7 +163,7 @@ end
 mailWidget = wibox.widget.textbox()
 mailWidgetTimer = timer({ timeout = 1800 })
 mailWidgetTimer:connect_signal("timeout", f_mailWidget)
---mailWidgetTimer:start()
+mailWidgetTimer:start()
 --f_mailWidget() -- check mail now, or wait timeout event
 -- TODO use this instead of the above
 --mailWidget = lain.widgets.imap({server='imap.openmailbox.org',
@@ -174,7 +174,7 @@ mailWidgetTimer:connect_signal("timeout", f_mailWidget)
 mybattery = wibox.widget.textbox()
 vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
   --naughty.notify({ title = "test",
-                   --text = args[1] })
+                   --text = args[1] ..' '.. args[2] })
   if args[1] == '−' and args[2] <= 5 then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = '¡Batería sin carga!',
@@ -191,7 +191,7 @@ vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
                      timeout = 20 })
   end
   return "  battery_<span color='#fff'>" .. args[2] .. '</span>'
-end, 30, "BAT0")
+end, 30, "BAT1")
 
 -- Temperature
 tempwidget = wibox.widget.textbox()
@@ -391,9 +391,9 @@ globalkeys = awful.util.table.join(
 
     -- Volume
     awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.util.spawn("amixer set Master 2%+", false) end),
+        awful.util.spawn("amixer set Master 2dB+", false) end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
-        awful.util.spawn("amixer set Master 2%-", false) end),
+        awful.util.spawn("amixer set Master 2dB-", false) end),
     awful.key({ }, "XF86AudioMute", function ()
         awful.util.spawn("amixer sset Master toggle", false) end),
 
@@ -593,35 +593,35 @@ end)
 
 -- opacity personalization
 
--- client.connect_signal("focus", function(c)
-    -- c.border_color = beautiful.border_focus
-    -- if c.class ~= "URxvt" then
-        -- c.opacity = 1.0
-    -- end
--- end)
+client.connect_signal("focus", function(c)
+    c.border_color = beautiful.border_focus
+    if c.class ~= "URxvt" then
+        c.opacity = 1.0
+    end
+end)
 
--- client.connect_signal("unfocus", function(c)
-    -- c.border_color = beautiful.border_normal
-    -- if c.class ~= "URxvt" and
-       -- c.class ~= "Vlc" and
-       -- c.class ~= "MPlayer" and c.name ~= "Electric Sheep" then
-        -- c.opacity = 0.6
-    -- end
--- end)
+client.connect_signal("unfocus", function(c)
+    c.border_color = beautiful.border_normal
+    if c.class ~= "URxvt" and
+       c.class ~= "Vlc" and
+       c.class ~= "MPlayer" and c.name ~= "Electric Sheep" then
+        c.opacity = 0.6
+    end
+end)
 
 -- no borders on maximized terminals
 
--- client.connect_signal("property::maximized", function(c)
-    -- if c.class == "URxvt" and c.maximized then
-        -- c.border_width = 0
-    -- end
--- end)
+client.connect_signal("property::maximized", function(c)
+    if c.class == "URxvt" and c.maximized then
+        c.border_width = 0
+    end
+end)
 
--- client.connect_signal("property::floating", function(c)
-    -- if c.class == "URxvt" then
-        -- c.border_width = 2
-    -- end
--- end)
+client.connect_signal("property::floating", function(c)
+    if c.class == "URxvt" then
+        c.border_width = 2
+    end
+end)
 
 -- }}}
 
