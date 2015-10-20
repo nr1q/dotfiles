@@ -1,7 +1,7 @@
 " {{{ GENERAL
 
     syntax on
-    "colorscheme nrq_colors
+    colorscheme nrq_colors
 
     set nocompatible    " let's be iMproved
     set t_Co=256        " enable 256 colors
@@ -48,7 +48,7 @@
 " {{{ PLUGINS AND SETTINGS
 
     " Tim Pope's
-    "execute pathogen#infect()
+    execute pathogen#infect()
 
     " load filetype plugins/indent settings
     filetype plugin indent on

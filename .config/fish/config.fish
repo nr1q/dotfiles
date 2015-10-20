@@ -101,7 +101,7 @@ function fish_prompt --description 'Write out the prompt'
             end
 
             echo -n -s (set_color --bold fff) "$USER"
-            echo -n -s "$__fish_prompt_normal" ' :: '
+            echo -n -s "$__fish_prompt_normal" " :$__fish_prompt_hostname: "
             echo -n -s "$__fish_prompt_cwd" (prompt_pwd)
             echo
             echo -n -s "$__fish_prompt_normal" '> '
