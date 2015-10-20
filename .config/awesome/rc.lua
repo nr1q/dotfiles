@@ -43,7 +43,7 @@ end
 -- {{{ Variable definitions
 
 -- Themes define colours, icons, and wallpapers
-config_dir = (os.getenv('HOME') .. "/.config/awesome/")
+config_dir = (os.getenv('HOME') .. "/.config/awesome")
 themes_dir = (config_dir .. "/themes")
 beautiful.init(themes_dir .. "/hnrch/theme.lua")
 
@@ -174,7 +174,7 @@ mailWidgetTimer:start()
 mybattery = wibox.widget.textbox()
 vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
   --naughty.notify({ title = "test",
-                   --text = args[1] })
+                   --text = args[1] ..' '.. args[2] })
   if args[1] == '−' and args[2] <= 5 then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = '¡Batería sin carga!',
@@ -358,6 +358,8 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    -- terminal without transparency
+    awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(terminal .. ' -depth 0') end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -391,9 +393,9 @@ globalkeys = awful.util.table.join(
 
     -- Volume
     awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.util.spawn("amixer set Master 2%+", false) end),
+        awful.util.spawn("amixer set Master 2dB+", false) end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
-        awful.util.spawn("amixer set Master 2%-", false) end),
+        awful.util.spawn("amixer set Master 2dB-", false) end),
     awful.key({ }, "XF86AudioMute", function ()
         awful.util.spawn("amixer sset Master toggle", false) end),
 
