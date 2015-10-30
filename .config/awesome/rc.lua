@@ -92,7 +92,7 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-  names = { '_', '\\', '|', '/', '_' },
+  names = { '  C O D E  ', '  W W W  ', '  T E R M  ', '  A / V  ', '  R A N D  ' },
   layouts = { layouts[2], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1] }
 }
 for s = 1, screen.count() do
@@ -151,9 +151,6 @@ dbus.connect_signal("ru.gentoo.kbdd", function(...)
     lts = {[0] = "en", [1] = "latam"}
 kbdwidget:set_markup("  keyboard_<span font='Terminus Bold 10' color='#fff'>" .. lts[layout] .. '</span>')
 end)
-
--- Lock-caps Indicator
---lciWidget = wibox.widget.textbox()
 
 
 -- Mail widget
