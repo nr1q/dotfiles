@@ -40,10 +40,17 @@ end
 
 # }}}
 
-# ALIASES {{{
+# ALIASES & ABBREVIATIONS {{{
 
-alias v vim
-alias g git
+abbr g git
+abbr gs 'git status'
+abbr gd 'git diff'
+
+abbr sv 'sudo vim'
+abbr v vim
+abbr vd vimdiff
+
+alias iranger 'ranger --cmd="set preview_images true"'
 
 function ls --description 'List colored contents of directory'
     set -l param --human-readable --group-directories-first --color=auto

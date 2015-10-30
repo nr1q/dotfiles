@@ -69,8 +69,8 @@ local layouts =
     lain.layout.uselesstile.bottom,
     lain.layout.uselesstile.top,
     --awful.layout.suit.fair,
-    lain.layout.uselessfair,
-    lain.layout.uselessfair.horizontal,
+    --lain.layout.uselessfair,
+    --lain.layout.uselessfair.horizontal,
     lain.layout.uselesspiral,
     lain.layout.uselesspiral.dwindle,
     awful.layout.suit.max,
@@ -92,7 +92,7 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-  names = { '_', '\\', '|', '/', '_' },
+  names = { '  C O D E  ', '  W W W  ', '  T E R M  ', '  A / V  ', '  R A N D  ' },
   layouts = { layouts[2], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1] }
 }
 for s = 1, screen.count() do
@@ -141,7 +141,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Keyboard widget
 kbdwidget = wibox.widget.textbox()
-kbdwidget:set_markup("  keyboard_<span color='#fff'>en</span>")
+kbdwidget:set_markup("  keyboard_<span font_desc='terminus bold 10' color='#fff'>en</span>")
 
 dbus.request_name("session", "ru.gentoo.kbdd")
 dbus.add_match("session", "interface='ru.gentoo.kbdd',member='layoutChanged'")
@@ -149,16 +149,24 @@ dbus.connect_signal("ru.gentoo.kbdd", function(...)
     local data = {...}
     local layout = data[2]
     lts = {[0] = "en", [1] = "latam"}
-kbdwidget:set_markup("  keyboard_<span color='#fff'>" .. lts[layout] .. '</span>')
+kbdwidget:set_markup("  keyboard_<span font_desc='terminus bold 10' color='#fff'>" .. lts[layout] .. '</span>')
 end)
 
--- Lock-caps Indicator
---lciWidget = wibox.widget.textbox()
+
+-- Caps Lock Indicator
+--function f_capsIndicator()
+    --local caps = awful.util.pread('/usr/bin/xset -q | /usr/bin/grep Caps')
+    --local i,j = string.find(caps, 'o[nf]+')
+    --caps = string.sub(caps, i, j)
+    --capswidget:set_markup("  capslock_<span font_desc='terminus bold 10' color='#fff'>" .. caps .. "</span>")
+--end
+--capswidget = wibox.widget.textbox()
+--f_capsIndicator()
 
 
 -- Mail widget
 function f_mailWidget()
-    mailWidget:set_markup( " mail_<span color='#fff'>" .. awful.util.pread("/usr/local/bin/maic.py") .. "</span>" )
+    mailWidget:set_markup( " mail_<span font_desc='terminus bold 10' color='#fff'>" .. awful.util.pread("/usr/local/bin/maic.py") .. "</span>" )
 end
 mailWidget = wibox.widget.textbox()
 mailWidgetTimer = timer({ timeout = 1800 })
@@ -190,14 +198,14 @@ vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
                      text = "Ya puede desconectar el ordenador",
                      timeout = 20 })
   end
-  return "  battery_<span color='#fff'>" .. args[2] .. '</span>'
+  return "  battery_<span font_desc='terminus bold 10' color='#fff'>" .. args[2] .. '</span>'
 end, 30, "BAT0")
 
 -- Temperature
 tempwidget = wibox.widget.textbox()
 vicious.register(tempwidget, vicious.widgets.thermal,
-                "  temp_<span color='#fff'>$1</span>",
-                20,
+                "  temp_<span font_desc='terminus bold 10' color='#fff'>$1</span>",
+                30,
                 'thermal_zone0')
 
 -- Volume
@@ -205,7 +213,7 @@ myvolume = wibox.widget.textbox()
 vicious.register(myvolume, vicious.widgets.volume, function(widget, args)
   local muted = ' '
   if args[2] ~= '♫' then muted = '_muted ' end
-  return "  volume_<span color='#fff'>" .. args[1] .. muted .. '</span>'
+  return "  volume_<span font_desc='terminus bold 10' color='#fff'>" .. args[1] .. muted .. '</span>'
 end, 0.2, "Master")
 -- }}}
 
@@ -293,6 +301,7 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mailWidget)
+    --right_layout:add(capswidget)
     right_layout:add(tempwidget)
     right_layout:add(mybattery)
     right_layout:add(kbdwidget)
