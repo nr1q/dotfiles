@@ -50,7 +50,17 @@ abbr sv 'sudo vim'
 abbr v vim
 abbr vd vimdiff
 
+# ranger with image preview (non-ascii)
 alias iranger 'ranger --cmd="set preview_images true"'
+
+function cranger --description 'Keep last directory on exit'
+    set -l tempfile '/tmp/ranger-choosedir'
+    /usr/bin/ranger --choosedir=/tmp/ranger-choosedir
+    if test -f $tempfile; and test (cat $tempfile) != (echo -n (pwd))
+        cd (cat $tempfile)
+    end
+    rm $tempfile
+end
 
 function ls --description 'List colored contents of directory'
     set -l param --human-readable --group-directories-first --color=auto
@@ -58,15 +68,6 @@ function ls --description 'List colored contents of directory'
         set param $param --indicator-style=classify
     end
     command ls $param $argv
-end
-
-function ranger-cd --description 'Keep last directory on exit'
-    set -l tempfile '/tmp/ranger-choosedir'
-    /usr/bin/ranger --choosedir=/tmp/ranger-choosedir
-    if test -f $tempfile; and test (cat $tempfile) != (echo -n (pwd))
-        cd (cat $tempfile)
-    end
-    rm $tempfile
 end
 
 # }}}

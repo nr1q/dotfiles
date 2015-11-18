@@ -40,6 +40,8 @@
     " list invisible chars
     set listchars=tab:▸\ ,space:\ ,extends:▸,precedes:◂,eol:¬
 
+    " new windows at bottom
+    set splitbelow
     " symmetric encryption
     set cryptmethod=blowfish2
 
@@ -107,6 +109,15 @@
         "\ 'fallback': 'find %s -type f'
     "\ }
 
+    " YouCompleteMe
+    let g:ycm_key_list_previous_completion = ['<Up>']
+    let g:ycm_key_list_select_completion   = ['<Down>']
+    let g:ycm_collect_identifiers_from_tags_files = 0
+
+    " Ultisnips
+    " ---------
+
+    let g:UltiSnipsSnippetsDir   = "~/.vim/snippets/"
 
     " Syntastic
     " ---------
@@ -116,7 +127,6 @@
     "let g:syntastic_cpp_no_include_search = 1
     "let g:syntastic_cpp_auto_refresh_includes = 1
     "let g:syntastic_cpp_remove_include_errors = 1
-    "let g:syntastic_cpp_include_dirs = ['/nrq/of08464/libs/openFrameworks/']
 
     " Fish shell doesn't support the standard
     " UNIX syntax for file redirections
@@ -159,18 +169,17 @@
     autocmd FileType c,cc,cpp,h,hpp set tags +=~/.vim/tags/cpp
 
     " compile and run
-    "autocmd FileType python nnoremap <buffer> <F4> :exec '!clear;python' shellescape(@%, 1)<cr> " old one
-    autocmd FileType python nnoremap <buffer> <F4> :w <bar> exec '!python '.shellescape('%')<CR>
-    autocmd FileType c nnoremap <F4> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
-    autocmd FileType cpp nnoremap <F4> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
+    autocmd FileType c,cc,cpp,h,hpp nnoremap <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+    autocmd FileType c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
+    autocmd FileType cpp nnoremap <F5> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
+    autocmd FileType python nnoremap <buffer> <F5> :w <bar> exec '!python '.shellescape('%')<CR>
 
-    " indentation for C and CPP
-    "autocmd FileType c,cc,cpp,h,hpp,php set cindent
-    "autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
+    " syntastic for openFrameworks projects
+    autocmd BufNewFile,BufRead,BufEnter */of09064/* let g:syntastic_cpp_include_dirs = ['./', '/nrq/of09064/libs/openFrameworks/']
 
-    " close automatically the preview window after a completion
-    "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-    "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+    " close automatically the Omni-completion tip window after a selection is made
+    autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
     " color the indentation guides
     autocmd VimEnter,ColorScheme * :highlight IndentGuidesOdd ctermbg=235

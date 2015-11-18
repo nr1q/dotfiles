@@ -153,17 +153,6 @@ kbdwidget:set_markup("  keyboard_<span font_desc='terminus bold 10' color='#fff'
 end)
 
 
--- Caps Lock Indicator
---function f_capsIndicator()
-    --local caps = awful.util.pread('/usr/bin/xset -q | /usr/bin/grep Caps')
-    --local i,j = string.find(caps, 'o[nf]+')
-    --caps = string.sub(caps, i, j)
-    --capswidget:set_markup("  capslock_<span font_desc='terminus bold 10' color='#fff'>" .. caps .. "</span>")
---end
---capswidget = wibox.widget.textbox()
---f_capsIndicator()
-
-
 -- Mail widget
 function f_mailWidget()
     mailWidget:set_markup( " mail_<span font_desc='terminus bold 10' color='#fff'>" .. awful.util.pread("/usr/local/bin/maic.py") .. "</span>" )
@@ -183,12 +172,12 @@ mybattery = wibox.widget.textbox()
 vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
   --naughty.notify({ title = "test",
                    --text = args[1] ..' '.. args[2] })
-  if args[1] == '−' and args[2] <= 5 then
+  if args[1] == '−' and args[2] <= 7 then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = '¡Batería sin carga!',
                      text = 'Apagando…' })
     awful.util.spawn_with_shell("shutdown -h now")
-  elseif args[1] == '−' and args[2] <= 10 then
+  elseif args[1] == '−' and args[2] <= 14 then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = '¡Bajo nivel de batería!',
                      text = "Conecte el computador al tomacorriente\nTiempo restante: " .. args[3],
@@ -199,13 +188,13 @@ vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
                      timeout = 20 })
   end
   return "  battery_<span font_desc='terminus bold 10' color='#fff'>" .. args[2] .. '</span>'
-end, 30, "BAT0")
+end, 15, "BAT0")
 
 -- Temperature
 tempwidget = wibox.widget.textbox()
 vicious.register(tempwidget, vicious.widgets.thermal,
                 "  temp_<span font_desc='terminus bold 10' color='#fff'>$1</span>",
-                30,
+                15,
                 'thermal_zone0')
 
 -- Volume
@@ -301,7 +290,6 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mailWidget)
-    --right_layout:add(capswidget)
     right_layout:add(tempwidget)
     right_layout:add(mybattery)
     right_layout:add(kbdwidget)
