@@ -7,8 +7,8 @@
     set t_Co=256        " enable 256 colors
     set number          " show line numbers
     set nowrap          " wrapping disabled
-    set timeoutlen=2000 " 2.0s for mappings
-    set ttimeoutlen=100 " 0.1s in key codes
+    set timeoutlen=1000 " 1s for mappings
+    set ttimeoutlen=10  " 10ms for codes
     set laststatus=2    " always show status line
     set showcmd         " show command in bottom
     set wildmenu        " better command completion
@@ -42,6 +42,7 @@
 
     " new windows at bottom
     set splitbelow
+
     " symmetric encryption
     set cryptmethod=blowfish2
 
@@ -100,7 +101,9 @@
     " CtrlP
     " -----
 
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
     "let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+    let g:ctrlp_cache_dir = '~/.cache/ctrlp'
     let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
     "let g:ctrlp_user_command = {
         "\ 'types': {
@@ -109,15 +112,23 @@
         "\ 'fallback': 'find %s -type f'
     "\ }
 
+
     " YouCompleteMe
+    " -------------
+
     let g:ycm_key_list_previous_completion = ['<Up>']
     let g:ycm_key_list_select_completion   = ['<Down>']
-    let g:ycm_collect_identifiers_from_tags_files = 0
+    let g:ycm_collect_identifiers_from_tags_files = 1
+
+    " don't disable syntastic c-family checkers
+    "let g:ycm_show_diagnostics_ui = 0
+
 
     " Ultisnips
     " ---------
 
     let g:UltiSnipsSnippetsDir   = "~/.vim/snippets/"
+
 
     " Syntastic
     " ---------
@@ -132,8 +143,7 @@
     " UNIX syntax for file redirections
     let g:syntastic_shell = "/bin/bash"
 
-    " would be nice to custom this part…
-    " check the :help for this variable
+    " disable styling messages
     let g:syntastic_quiet_messages = {
         \ 'type': 'style' }
 
@@ -165,21 +175,21 @@
     " Emmet
     autocmd FileType php,html,css EmmetInstall
 
-    " CTags
-    autocmd FileType c,cc,cpp,h,hpp set tags +=~/.vim/tags/cpp
+    " C-Family
+    "autocmd FileType c,cc,cpp,h,hpp set tags +=~/.vim/tags/cpp
 
     " compile and run
-    autocmd FileType c,cc,cpp,h,hpp nnoremap <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+    autocmd FileType c,cc,cpp,h,hpp nnoremap <F4> :call SwitchHeader()<CR>
     autocmd FileType c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
     autocmd FileType cpp nnoremap <F5> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
     autocmd FileType python nnoremap <buffer> <F5> :w <bar> exec '!python '.shellescape('%')<CR>
 
-    " syntastic for openFrameworks projects
-    autocmd BufNewFile,BufRead,BufEnter */of09064/* let g:syntastic_cpp_include_dirs = ['./', '/nrq/of09064/libs/openFrameworks/']
+    " openFrameworks
+    autocmd BufNewFile,BufRead,BufEnter */of09064/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
 
     " close automatically the Omni-completion tip window after a selection is made
-    autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+    "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+    "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
     " color the indentation guides
     autocmd VimEnter,ColorScheme * :highlight IndentGuidesOdd ctermbg=235
@@ -276,12 +286,16 @@
     map <Leader>j <Plug>(easymotion-j)
     map <Leader>k <Plug>(easymotion-k)
 
+    " show highlighting groups for current word
+    nmap <C-S-G> :call <SID>SynStack()<CR>
+
+    command! -bar Ranger call RangerChooser()
+    nnoremap <leader>r :<C-U>Ranger<CR>
+
 " }}}
 
 " {{{ FUNCTIONS
 
-    " show highlighting groups for current word
-    nmap <C-S-G> :call <SID>SynStack()<CR>
     function! <SID>SynStack()
         if !exists("*synstack")
             return
@@ -297,9 +311,6 @@
     " or the keybinding "<leader>r". Once you select one or more
     " files, press enter and ranger will quit again and vim will
     " open the selected files.
-
-    command! -bar Ranger call RangerChooser()
-    nnoremap <leader>r :<C-U>Ranger<CR>
 
     function! RangerChooser()
         let temp = tempname()
@@ -325,6 +336,28 @@
             exec 'argadd ' . fnameescape(name)
         endfor
         redraw!
+    endfunction
+
+    " Switch header for .c, .cc, .cpp, .h and .hpp files
+    " --------------------------------------------------
+
+    function! SwitchHeader()
+        let filenoext = expand('%:p:r')
+        let fileext = expand('%:e')
+        if l:fileext == 'c' || l:fileext == 'cc' || l:fileext == 'cpp'
+            if filereadable(l:filenoext . ".h")
+                exec 'edit ' .  l:filenoext . '.h'
+            elseif filereadable(filenoext . ".hpp")
+                exec 'edit ' .  l:filenoext . '.hpp'
+        else
+            if filereadable(l:filenoext . ".c")
+                exec 'edit ' .  l:filenoext . '.c'
+            elseif filereadable(filenoext . ".cc")
+                exec 'edit ' .  l:filenoext . '.cc'
+            elseif filereadable(l:filenoext . ".cpp")
+                exec 'edit ' .  l:filenoext . '.cpp'
+            endif
+        endif
     endfunction
 
 " }}}
