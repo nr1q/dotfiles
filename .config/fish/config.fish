@@ -7,7 +7,8 @@ setenv GPG_TTY (tty)
 
 function fish_colors --description 'Set my custom fish colors'
     set fish_color_autosuggestion  ffffff
-    set fish_color_command         626262
+    set fish_color_command         696969
+    set fish_color_param           b2b2b2
     set fish_color_comment         87d700
     set fish_color_cwd             green
     set fish_color_cwd_root        red
@@ -19,7 +20,6 @@ function fish_colors --description 'Set my custom fish colors'
     set fish_color_match           cyan
     set fish_color_normal          normal
     set fish_color_operator        ffd700 --bold
-    set fish_color_param           b2b2b2
     set fish_color_quote           ffffff
     set fish_color_redirection     0087ff
     # https://github.com/fish-shell/fish-shell/issues/2442

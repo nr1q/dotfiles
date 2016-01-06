@@ -104,13 +104,14 @@
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
     "let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
     let g:ctrlp_cache_dir = '~/.cache/ctrlp'
-    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-    "let g:ctrlp_user_command = {
-        "\ 'types': {
-            "\ 1: ['.git', 'git ls-files --cached --exclude-standard --others'],
-        "\ },
-        "\ 'fallback': 'find %s -type f'
-    "\ }
+    "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+    let g:ctrlp_user_command = {
+        \ 'types': {
+            \ 1: ['.git', 'git ls-files --cached --exclude-standard --others'],
+        \ },
+        \ 'fallback': 'find %s -type f -path "*/src/*"'
+    \ }
+        "\ 'fallback': 'find %s -type f ! -path "*/.git/*" ! -path "*/.hg/*" ! -path "*/.svn/*" | xargs file | grep "ASCII text" | awk -F: "{print $1}"'
 
 
     " YouCompleteMe
@@ -180,12 +181,13 @@
 
     " compile and run
     autocmd FileType c,cc,cpp,h,hpp nnoremap <F4> :call SwitchHeader()<CR>
-    autocmd FileType c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
-    autocmd FileType cpp nnoremap <F5> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').'; and ./'.shellescape('%:r')<CR>
+    autocmd FileType c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').'; and '.shellescape('%:p:r')<CR>
+    autocmd FileType cpp nnoremap <F5> :w <bar> exec '!g++ -std=c++11 '.shellescape('%').' -o '.shellescape('%:r').'; and '.shellescape('%:p:r')<CR>
     autocmd FileType python nnoremap <buffer> <F5> :w <bar> exec '!python '.shellescape('%')<CR>
 
     " openFrameworks
     autocmd BufNewFile,BufRead,BufEnter */of09064/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
+    autocmd BufNewFile,BufRead,BufEnter */of09064/* nnoremap <F5> :w <bar> make -C ..; and make -C .. run<CR>
 
     " close automatically the Omni-completion tip window after a selection is made
     "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -349,6 +351,7 @@
                 exec 'edit ' .  l:filenoext . '.h'
             elseif filereadable(filenoext . ".hpp")
                 exec 'edit ' .  l:filenoext . '.hpp'
+            endif
         else
             if filereadable(l:filenoext . ".c")
                 exec 'edit ' .  l:filenoext . '.c'

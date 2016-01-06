@@ -591,31 +591,32 @@ end)
 --end)
 
 -- opacity personalization
-
 client.connect_signal("focus", function(c)
     c.border_color = beautiful.border_focus
+    --naughty.notify({timeout = 10, title = c.name, text = c.class })
+    --naughty.notify({timeout = 10, title = c.name, text = c.role })
+    --naughty.notify({timeout = 10, title = c.name, text = c.ontop })
     if c.class ~= "URxvt" then
         c.opacity = 1.0
     end
 end)
-
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
-    if c.class ~= "URxvt" and
-       c.class ~= "Vlc" and
-       c.class ~= "MPlayer" and c.name ~= "Electric Sheep" then
+    if c.class ~= "MPlayer" and c.name ~= "Electric Sheep" and
+       c.class ~= "Gimp" and c.role ~= "gimp-image-window" and
+       c.class ~= "URxvt" and
+       c.class ~= "Vlc"
+        then
         c.opacity = 0.6
     end
 end)
 
 -- no borders on maximized terminals
-
 client.connect_signal("property::maximized", function(c)
     if c.class == "URxvt" and c.maximized then
         c.border_width = 0
     end
 end)
-
 client.connect_signal("property::floating", function(c)
     if c.class == "URxvt" then
         c.border_width = 2
