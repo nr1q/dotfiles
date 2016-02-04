@@ -596,18 +596,20 @@ client.connect_signal("focus", function(c)
     --naughty.notify({timeout = 10, title = c.name, text = c.class })
     --naughty.notify({timeout = 10, title = c.name, text = c.role })
     --naughty.notify({timeout = 10, title = c.name, text = c.ontop })
-    if c.class ~= "URxvt" then
+    --if c.class ~= "URxvt" then
         c.opacity = 1.0
-    end
+    --end
 end)
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
     if c.class ~= "MPlayer" and c.name ~= "Electric Sheep" and
        c.class ~= "Gimp" and c.role ~= "gimp-image-window" and
-       c.class ~= "URxvt" and
-       c.class ~= "Vlc"
-        then
-        c.opacity = 0.6
+       c.class ~= "Vlc" then
+        if c.class ~= "URxvt" then
+            c.opacity = 0.66
+        else
+            c.opacity = 0.77
+        end
     end
 end)
 

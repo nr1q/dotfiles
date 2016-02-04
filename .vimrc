@@ -184,10 +184,11 @@
     autocmd FileType c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').'; and '.shellescape('%:p:r')<CR>
     autocmd FileType cpp nnoremap <F5> :w <bar> exec '!g++ -std=c++11 '.shellescape('%').' -o '.shellescape('%:r').'; and '.shellescape('%:p:r')<CR>
     autocmd FileType python nnoremap <buffer> <F5> :w <bar> exec '!python '.shellescape('%')<CR>
+    autocmd FileType markdown nnoremap <F5> :w <bar> !markdown % <bar> lynx -stdin<CR>
 
     " openFrameworks
     autocmd BufNewFile,BufRead,BufEnter */of09064/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
-    autocmd BufNewFile,BufRead,BufEnter */of09064/* nnoremap <F5> :w <bar> make -C ..; and make -C .. run<CR>
+    autocmd BufNewFile,BufRead,BufEnter */of09064/* nnoremap <F5> :w <bar> make -C .. -j 4; and make -C .. run<CR>
 
     " close automatically the Omni-completion tip window after a selection is made
     "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
