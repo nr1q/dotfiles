@@ -42,9 +42,9 @@ end
 
 # ALIASES & ABBREVIATIONS {{{
 
-abbr g git
 abbr gs 'git status'
 abbr gd 'git diff'
+abbr gt 'git tree'
 
 abbr sv 'sudo vim'
 abbr v vim
