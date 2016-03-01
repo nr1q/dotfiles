@@ -188,7 +188,7 @@
 
     " openFrameworks
     autocmd BufNewFile,BufRead,BufEnter */of*64/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
-    autocmd BufNewFile,BufRead,BufEnter */of*64/* nnoremap <F5> :w <bar> make -C .. -j 4; and make -C .. run<CR>
+    autocmd BufNewFile,BufRead,BufEnter */of*64/* nnoremap <F5> :w <bar> !colormake -C .. -j 3; and make -C .. run<CR>
 
     " close automatically the Omni-completion tip window after a selection is made
     "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif

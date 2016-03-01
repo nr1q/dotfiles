@@ -38,6 +38,17 @@ function prompt_pwd --description 'Print the current working directory, NOT shor
     end
 end
 
+# Use $EDITOR to edit the current command
+function edit_commandline --description "Edit the current command in your $EDITOR"
+    set -q EDITOR; or return 1
+    set -l tmpfile (mktemp -t "edit_commandline.XXX"); or return 1
+    commandline > $tmpfile
+    eval $EDITOR $tmpfile
+    commandline -r -- (cat $tmpfile)
+    rm $tmpfile
+end
+bind \ee edit_commandline
+
 # }}}
 
 # ALIASES & ABBREVIATIONS {{{
