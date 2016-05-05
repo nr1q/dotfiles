@@ -103,23 +103,25 @@
 
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
     "let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-    let g:ctrlp_cache_dir = '~/.cache/ctrlp'
+    "let g:ctrlp_cache_dir = '~/.cache/ctrlp'
+    let g:ctrlp_working_path_mode = 'ra'
+    let g:ctrlp_use_caching = 0
     "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
     let g:ctrlp_user_command = {
         \ 'types': {
-            \ 1: ['.git', 'git ls-files --cached --exclude-standard --others'],
+            \ 1: ['.git', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
         \ },
         \ 'fallback': 'find %s -type f -path "*/src/*"'
     \ }
-        "\ 'fallback': 'find %s -type f ! -path "*/.git/*" ! -path "*/.hg/*" ! -path "*/.svn/*" | xargs file | grep "ASCII text" | awk -F: "{print $1}"'
+    "\ 'fallback': 'find %s -type f ! -path "*/.git/*" ! -path "*/.hg/*" ! -path "*/.svn/*" | xargs file | grep "ASCII text" | awk -F: "{print $1}"'
 
 
     " YouCompleteMe
     " -------------
 
-    let g:ycm_key_list_previous_completion = ['<Up>']
-    let g:ycm_key_list_select_completion   = ['<Down>']
-    let g:ycm_collect_identifiers_from_tags_files = 1
+    "let g:ycm_key_list_previous_completion = ['<Up>']
+    "let g:ycm_key_list_select_completion   = ['<Down>']
+    "let g:ycm_collect_identifiers_from_tags_files = 1
 
     " don't disable syntastic c-family checkers
     "let g:ycm_show_diagnostics_ui = 0
@@ -174,7 +176,7 @@
     autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
     " Emmet
-    autocmd FileType php,html,css EmmetInstall
+    autocmd FileType php,html,css,twig EmmetInstall
 
     " C-Family
     "autocmd FileType c,cc,cpp,h,hpp set tags +=~/.vim/tags/cpp
