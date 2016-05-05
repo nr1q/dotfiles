@@ -57,9 +57,14 @@ abbr gs 'git status'
 abbr gd 'git diff'
 abbr gt 'git tree'
 
-abbr sv 'sudo vim'
+abbr se sudoedit
 abbr v vim
 abbr vd vimdiff
+abbr vup 'vagrant up'
+abbr vht 'vagrant halt'
+abbr vre 'vagrant reload'
+abbr vss 'vagrant ssh'
+abbr vsu 'vagrant suspend'
 
 # ranger with image preview (non-ascii)
 alias iranger 'ranger --cmd="set preview_images true"'
@@ -86,6 +91,10 @@ end
 # PROMPT {{{
 
 function fish_prompt --description 'Write out the prompt'
+    set -l git_branch ''
+    if git rev-parse ^/dev/null
+        set git_branch  " " (git branch ^/dev/null | sed -n '/\* /s///p')
+    end
 
     # Just calculate these once, to save a few cycles when displaying the prompt
     if not set -q __fish_prompt_hostname
@@ -122,6 +131,7 @@ function fish_prompt --description 'Write out the prompt'
             echo -n -s (set_color --bold fff) "$USER"
             echo -n -s "$__fish_prompt_normal" " :$__fish_prompt_hostname: "
             echo -n -s "$__fish_prompt_cwd" (prompt_pwd)
+            echo -n -s (set_color yellow) $git_branch
             echo
             echo -n -s "$__fish_prompt_normal" '> '
     end
@@ -131,7 +141,7 @@ end
 
 # start X at login
 if status --is-login
-    if test -z "$DISPLAY" -a $XDG_VTNR = 1
+    if test -z "$DISPLAY" -a $XDG_VTNR -eq 1
         exec startx -- -keeptty
     end
 end

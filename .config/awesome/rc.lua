@@ -183,9 +183,9 @@ vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
                      text = "Conecte el computador al tomacorriente\nTiempo restante: " .. args[3],
                      timeout = 20 })
   elseif args[1] == '↯' and args[2] == 100 then
-    naughty.notify({ title = 'Batera cargada',
-                     text = "Ya puede desconectar el ordenador",
-                     timeout = 20 })
+    --naughty.notify({ title = 'Batera cargada',
+                     --text = "Ya puede desconectar el ordenador",
+                     --timeout = 20 })
   end
   return "  battery_<span font_desc='terminus bold 10' color='#fff'>" .. args[2] .. '</span>'
 end, 15, "BAT0")
@@ -370,7 +370,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     -- Mail fetching
-    awful.key({ modkey, "Control" }, "h",     f_mailWidget),
+    awful.key({ modkey, "Control" }, "h",     function() mailWidgetTimer:emit_signal("timeout") end),
 
     -- Screensaver
     awful.key({ }, "XF86ScreenSaver",         function () awful.util.spawn('electricsheep') end),
