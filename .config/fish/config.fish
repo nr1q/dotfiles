@@ -93,7 +93,7 @@ end
 function fish_prompt --description 'Write out the prompt'
     set -l git_branch ''
     if git rev-parse ^/dev/null
-        set git_branch  " " (git branch ^/dev/null | sed -n '/\* /s///p')
+        set git_branch  "" (git branch ^/dev/null | sed -n '/\* /s///p') " "
     end
 
     # Just calculate these once, to save a few cycles when displaying the prompt
@@ -130,8 +130,8 @@ function fish_prompt --description 'Write out the prompt'
 
             echo -n -s (set_color --bold fff) "$USER"
             echo -n -s "$__fish_prompt_normal" " :$__fish_prompt_hostname: "
-            echo -n -s "$__fish_prompt_cwd" (prompt_pwd)
             echo -n -s (set_color yellow) $git_branch
+            echo -n -s "$__fish_prompt_cwd" (prompt_pwd)
             echo
             echo -n -s "$__fish_prompt_normal" '> '
     end
