@@ -53,8 +53,10 @@ bind \ee edit_commandline
 
 # ALIASES & ABBREVIATIONS {{{
 
-abbr gs 'git status'
+abbr gcm 'git commit'
+abbr gco 'git checkout'
 abbr gd 'git diff'
+abbr gs 'git status'
 abbr gt 'git tree'
 
 abbr se sudoedit
