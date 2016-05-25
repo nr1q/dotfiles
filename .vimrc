@@ -1,7 +1,7 @@
 " {{{ GENERAL
 
     syntax on
-    colorscheme nrq_colors
+    colorscheme eclipse
 
     set nocompatible    " let's be iMproved
     set t_Co=256        " enable 256 colors
@@ -212,9 +212,14 @@
     nmap <silent> <leader>d :bp\|bd #<CR>
 
     " switching to another buffer
-    set switchbuf=usetab
-    nnoremap [5^ :bprevious<CR>
-    nnoremap [6^ :bnext<CR>
+    "set switchbuf=usetab
+
+    " Mappings to access buffers (don't use "\p" because a
+    " delay before pressing "p" would accidentally paste).
+    " \j \k \g : go left/right/last-used
+    nnoremap <Leader>j :bp<CR>
+    nnoremap <Leader>k :bn<CR>
+    nnoremap <Leader>g :e#<CR>
 
     " togglers
     nnoremap <F8>  :set list!<CR>
@@ -228,9 +233,6 @@
     vnoremap <silent> <C-S> <C-c>:update<CR>gv
     vnoremap <silent> <C-S> <esc>:w<CR>gv
     inoremap <silent> <C-S> <C-o>:update<CR>
-
-    " go to buffer by number
-    nnoremap gb :ls<CR>:b<space>
 
     " select last changed/pasted text
     "nnoremap gp `[v`]`]`
@@ -288,8 +290,8 @@
     nmap <Leader>s <Plug>(easymotion-s2)
 
     " JK motions: Line motions
-    map <Leader>j <Plug>(easymotion-j)
-    map <Leader>k <Plug>(easymotion-k)
+    map ,mj <Plug>(easymotion-j)
+    map ,mk <Plug>(easymotion-k)
 
     " show highlighting groups for current word
     nmap <C-S-G> :call <SID>SynStack()<CR>
