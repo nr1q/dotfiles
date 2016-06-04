@@ -142,6 +142,9 @@ end
 
 # }}}
 
+# ssh-agent starter using "start_agent" function;
+source ~/.config/fish/ssh_agent_start.fish
+
 # start X at login
 if status --is-login
     if test -z "$DISPLAY" -a $XDG_VTNR -eq 1
