@@ -1,6 +1,7 @@
 set fish_greeting
 
 setenv EDITOR vim
+setenv LANG en_US.UTF-8
 setenv GPG_TTY (tty)
 
 # FUNCTIONS {{{
@@ -95,7 +96,7 @@ end
 function fish_prompt --description 'Write out the prompt'
     set -l git_branch ''
     if git rev-parse ^/dev/null
-        set git_branch  "" (git branch ^/dev/null | sed -n '/\* /s///p') " "
+        set git_branch  " " (git branch ^/dev/null | sed -n '/\* /s///p') " "
     end
 
     # Just calculate these once, to save a few cycles when displaying the prompt

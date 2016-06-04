@@ -15,6 +15,21 @@ local naughty = require("naughty")
 local vicious = require("vicious")
 local menubar = require("menubar")
 
+-- Naughty notifier config
+--naughty.config.defaults.timeout       = 5
+--naughty.config.defaults.screen        = 1
+--naughty.config.defaults.position      = "top_right"
+naughty.config.defaults.margin        = 16
+--naughty.config.defaults.height        = 16
+--naughty.config.defaults.width         = 300
+naughty.config.defaults.gap           = 13
+--naughty.config.defaults.ontop         = true
+naughty.config.defaults.font          = beautiful.font
+naughty.config.defaults.fg            = beautiful.fg_focus
+naughty.config.defaults.bg            = '#000000e0'
+naughty.config.presets.border_color   = beautiful.border_focus
+naughty.config.defaults.border_width  = 2
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -154,11 +169,13 @@ end)
 
 
 -- Mail widget
+mailWidget = wibox.widget.textbox()
+mailWidgetTimer = timer({ timeout = 1800 })
+
 function f_mailWidget()
     mailWidget:set_markup( " mail_<span font_desc='terminus bold 10' color='#fff'>" .. awful.util.pread("/usr/local/bin/maic.py") .. "</span>" )
 end
-mailWidget = wibox.widget.textbox()
-mailWidgetTimer = timer({ timeout = 1800 })
+
 mailWidgetTimer:connect_signal("timeout", f_mailWidget)
 mailWidgetTimer:start()
 --f_mailWidget() -- check mail now, or wait timeout event

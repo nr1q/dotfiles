@@ -1,7 +1,7 @@
 " {{{ GENERAL
 
     syntax on
-    colorscheme eclipse
+    colorscheme darkZ
 
     set nocompatible    " let's be iMproved
     set t_Co=256        " enable 256 colors
@@ -176,7 +176,7 @@
     autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
     " Emmet
-    autocmd FileType php,html,css,twig EmmetInstall
+    autocmd FileType php,html,xhtml,css,twig EmmetInstall
 
     " C-Family
     "autocmd FileType c,cc,cpp,h,hpp set tags +=~/.vim/tags/cpp
