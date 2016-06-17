@@ -1,7 +1,8 @@
 " {{{ GENERAL
 
     syntax on
-    colorscheme darkZ
+    "colorscheme darkZ
+    colorscheme slate
 
     set nocompatible    " let's be iMproved
     set t_Co=256        " enable 256 colors

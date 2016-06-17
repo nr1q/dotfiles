@@ -223,6 +223,54 @@ vicious.register(myvolume, vicious.widgets.volume, function(widget, args)
 end, 0.2, "Master")
 -- }}}
 
+-- Cheatsheet
+function display_awesome_cheatsheet()
+  cheatsheet_text = '\
+Jargon                                                          Navigation\
+    Client:               The application window                    Mod4 + j:               Focus next client\
+    Tag:                  a.k.a. Desktop                            Mod4 + k:               Focus previous client\
+    Mod4:                 Windows key                               Mod4 + u:               Focus first urgent client\
+    Mod4 + c:             Show this cheatsheet                      Mod4 + ←:               View previous tag\
+                                                                    Mod4 + →:               View next tag\
+Window Manager                                                      Mod4 + 1-9:             Switch to tag 1-9\
+    Mod4 + Ctrl + r:      Restart Awesome                           Mod4 + F1:              Focus screen 1\
+    Mod4 + Shift + q:     Quit Awesome                              Mod4 + F2:              Focus screen 2\
+    Mod4 + r:             Run prompt                                Mod4 + ESC:             Focus previously selected tag set\
+    Mod4 + x:             Run Lua code prompt \
+    Mod4 + Return:        Spawn a terminal in current tag       Layout Modification\
+    Mod4 + w:             Open main menu                            Mod4 + Shift + k/j:     Rotate clients around\
+                                                                    Mod4 + h/l:             Change master width by 5%\
+Clients                                                             Mod4 + Shift + h:       Number of master windows +1\
+    Mod4 + m:             Toggle the maximized state                Mod4 + Shift + l:       Number of master windows -1\
+    Mod4 + n:             Minimize the focused client\
+    Mod4 + Ctrl + n:      Restore the minimized client              Mod4 + Space:           Next layout\
+    Mod4 + f:             Toggle fullscreen                         Mod4 + Shift + Space:   Previous layout\
+    Mod4 + t:             Toggle ontop                              Mod4 + Ctrl + Space:    Toggle floating master\
+    Mod4 + Shift + t:     Kill focused client                       Mod4 + Ctrl + Return:   Swap focused client with master\
+    Mod4 + p:             Launcher\
+\
+Mouse\
+    B1,B2,B3:             Mouse buttons 1-3 \
+    Mod4 + B1 on tag:     Send current client to clicked tag \
+    Mod4 + B1 on client:  Move window \
+    Mod4 + B3 on tag:     Toggle this tag for client \
+    Mod4 + B3 on client:  Resize window \
+    B3 clicked on tag:    Add tag to current view \
+\
+click this box to close'
+
+  naughty.notify({
+    position = 'bottom_right',
+    font = 'terminus 12',
+    title = "Awesome WM Cheat Sheet",
+    bg = '#000000e0',
+    timeout = 0,
+    text = cheatsheet_text,
+    screen = mouse.screen
+  })
+end
+-- End Cheatsheet
+
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
@@ -393,6 +441,9 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86ScreenSaver",         function () awful.util.spawn('electricsheep') end),
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
+
+    -- Cheatsheet
+    awful.key({ modkey },            "c",     function () display_awesome_cheatsheet() end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
