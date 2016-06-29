@@ -112,7 +112,7 @@
         \ 'types': {
             \ 1: ['.git', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
         \ },
-        \ 'fallback': 'find %s -type f -path "*/src/*"'
+        \ 'fallback': 'find %s -type f -path "*/src/*" ! -path "*/obj/*"'
     \ }
     "\ 'fallback': 'find %s -type f ! -path "*/.git/*" ! -path "*/.hg/*" ! -path "*/.svn/*" | xargs file | grep "ASCII text" | awk -F: "{print $1}"'
 
