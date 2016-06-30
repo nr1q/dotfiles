@@ -112,7 +112,7 @@
         \ 'types': {
             \ 1: ['.git', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
         \ },
-        \ 'fallback': 'find %s -type f -path "*/src/*" ! -path "*/obj/*"'
+        \ 'fallback': 'find %s -type f -path "*/src/*" ! -path "*/obj/*" ! -path "*.sw*"'
     \ }
     "\ 'fallback': 'find %s -type f ! -path "*/.git/*" ! -path "*/.hg/*" ! -path "*/.svn/*" | xargs file | grep "ASCII text" | awk -F: "{print $1}"'
 
@@ -190,8 +190,8 @@
     autocmd FileType markdown nnoremap <F5> :w <bar> !markdown % <bar> lynx -stdin<CR>
 
     " openFrameworks
-    autocmd BufNewFile,BufRead,BufEnter */of*64/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
-    autocmd BufNewFile,BufRead,BufEnter */of*64/* nnoremap <F5> :w <bar> !colormake -C .. -j 3; and make -C .. run<CR>
+    autocmd BufNewFile,BufRead,BufEnter */of/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
+    autocmd BufNewFile,BufRead,BufEnter */of/* nnoremap <F5> :w <bar> !colormake -j 3; and make run<CR>
 
     " close automatically the Omni-completion tip window after a selection is made
     "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -242,10 +242,10 @@
     " move lines up and down using Alt
     nnoremap j :m .+1<CR>==
     nnoremap k :m .-2<CR>==
-    inoremap j <Esc>:m .+1<CR>==gi
-    inoremap k <Esc>:m .-2<CR>==gi
-    vnoremap j :m '>+1<CR>gv=gv
-    vnoremap k :m '<-2<CR>gv=gv
+    "inoremap j <Esc>:m .+1<CR>==gi
+    "inoremap k <Esc>:m .-2<CR>==gi
+    "vnoremap j :m '>+1<CR>gv=gv
+    "vnoremap k :m '<-2<CR>gv=gv
 
     " use page up/down keys as ctrl+(u|d)
     nnoremap <PageUp>   <C-u>
@@ -273,6 +273,9 @@
     inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
                             \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 
+    " Jump to and from lines which have same indentation level
+    nnoremap [l :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
+    nnoremap ]l :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 
     " Easy Motion
     " -----------
