@@ -17,7 +17,7 @@ URxvt*boldFont: xft:Terminess Powerline:pixelsize=16:bold:antialias=false,xft:Te
 
 ! Black
 *.color0:    #000000
-*.color8:    #000000
+*.color8:    #555753
 
 ! Red
 *.color1:    #ff5d28
@@ -87,7 +87,7 @@ URxvt*scrollBar:                      false
 !URxvt*cursorUnderline:                boolean
 !URxvt*cursorBlink:                    boolean
 !URxvt*pointerBlank:                   boolean
-URxvt*background:                     rgba:0000/0000/0000/6666
+URxvt*background:                     rgba:0000/0000/0000/7777
 URxvt*foreground:                     #ffffff
 !URxvt*colorBD:                        color
 !URxvt*colorIT:                        color

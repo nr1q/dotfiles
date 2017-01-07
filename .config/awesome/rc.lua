@@ -423,7 +423,7 @@ globalkeys = awful.util.table.join(
     -- terminal without transparency
     awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(terminal .. ' -depth 0') end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey, "Shift", "Control" }, "q", awesome.quit),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -557,10 +557,10 @@ awful.rules.rules = {
     { rule       = { class = "URxvt" },
       properties = { border_width = 2,
                      size_hints_honor = false },
-      callback   = function(client)
+      callback   = function(c)
         --local w_area = screen[ client.screen ].workarea
         --naughty.notify({title = "blah", text = w_area.width/2 })
-        client:geometry( {x=33, y=47, width=1300, height=540} )
+        c:geometry( {x=33, y=47, width=1300, height=540} )
       end },
 
     { rule       = { class = "Xombrero" },
@@ -569,13 +569,24 @@ awful.rules.rules = {
         client:geometry( {x=33, y=47, width=1300, height=640} )
       end },
 
-    { rule       = { class = "chromium" },
+    { rule       = { class = "Chromium" },
       properties = { tag = tags[1][2],
                    border_width = 0 } },
-    { rule       = { role = "Browser", class = "chromium" },
+    { rule       = { role = "Browser", class = "Chromium" },
       properties = { floating = false, maximized = true } },
-    { rule       = { role = "pop-up", class = "chromium" },
+    { rule       = { role = "pop-up", class = "Chromium" },
       properties = { floating = true } },
+    { rule       = { role = "pop-up", class = "Chromium" },
+      callback = function(c)
+        --name = awful.client.property.get(c, 'name');
+        --naughty.notify({title = "blah", text = awful.client.property.get(c, 'name') })
+        --naughty.notify({title = "debug", text = c.name })
+        --if string.find(c.name, "Developer Tools") or
+          --string.find(c.name, "chrome-devtools") then
+          --c.opacity = 0.5
+        --end
+      end  }
+
 
 }
 -- }}}
@@ -655,7 +666,7 @@ end)
 -- http://awesome.naquadah.org/wiki/Signals#tag
 
 --client.connect_signal("new", function(c)
-    --naughty.notify({title = "blah", text = client.name })
+    --naughty.notify({title = "blah", text = c.opacity })
 --end)
 
 -- opacity personalization
@@ -664,20 +675,21 @@ client.connect_signal("focus", function(c)
     --naughty.notify({timeout = 10, title = c.name, text = c.class })
     --naughty.notify({timeout = 10, title = c.name, text = c.role })
     --naughty.notify({timeout = 10, title = c.name, text = c.ontop })
-    --if c.class ~= "URxvt" then
-        c.opacity = 1.0
-    --end
+
+    if c.name ~= nil and not string.find(c.name, "Developer Tools - ") then
+      c.opacity = 1.0
+    end
 end)
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
     if c.class ~= "MPlayer" and c.name ~= "Electric Sheep" and
        c.class ~= "Gimp" and c.role ~= "gimp-image-window" and
        c.class ~= "Vlc" then
-        if c.class ~= "URxvt" then
-            c.opacity = 0.66
-        else
-            c.opacity = 0.77
-        end
+       if c.class == "Chromium" and c.name ~= nil and string.find(c.name, "Developer Tools - ") then
+         c.opacity = 0.61
+       else
+         c.opacity = 0.77
+       end
     end
 end)
 

@@ -102,30 +102,28 @@
     " CtrlP
     " -----
 
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
+    set wildignore+=*/tmp/*,*.so,*.swp,*.swo,*.zip,*/vendor/*,*/\.git/*
     "let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
     "let g:ctrlp_cache_dir = '~/.cache/ctrlp'
     let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_use_caching = 0
-    "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
     let g:ctrlp_user_command = {
         \ 'types': {
             \ 1: ['.git', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
+            \ 'fallback': 'find %s -type f ! -path "*/.git/*" ! -path "*/.hg/*" ! -path "*/.svn/*" | xargs file | grep "ASCII text" | cut -d: -f1'
         \ },
-        \ 'fallback': 'find %s -type f -path "*/src/*" ! -path "*/obj/*" ! -path "*.sw*"'
     \ }
-    "\ 'fallback': 'find %s -type f ! -path "*/.git/*" ! -path "*/.hg/*" ! -path "*/.svn/*" | xargs file | grep "ASCII text" | awk -F: "{print $1}"'
 
 
     " YouCompleteMe
     " -------------
 
-    "let g:ycm_key_list_previous_completion = ['<Up>']
-    "let g:ycm_key_list_select_completion   = ['<Down>']
-    "let g:ycm_collect_identifiers_from_tags_files = 1
+    let g:ycm_key_list_previous_completion = ['<Up>']
+    let g:ycm_key_list_select_completion   = ['<Down>']
+    let g:ycm_collect_identifiers_from_tags_files = 1
 
     " don't disable syntastic c-family checkers
-    "let g:ycm_show_diagnostics_ui = 0
+    let g:ycm_show_diagnostics_ui = 0
 
 
     " Ultisnips
@@ -177,7 +175,7 @@
     autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
     " Emmet
-    autocmd FileType php,html,xhtml,css,twig EmmetInstall
+    autocmd FileType php,html,xhtml,css,scss,twig EmmetInstall
 
     " C-Family
     "autocmd FileType c,cc,cpp,h,hpp set tags +=~/.vim/tags/cpp
@@ -190,8 +188,8 @@
     autocmd FileType markdown nnoremap <F5> :w <bar> !markdown % <bar> lynx -stdin<CR>
 
     " openFrameworks
-    autocmd BufNewFile,BufRead,BufEnter */of/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
-    autocmd BufNewFile,BufRead,BufEnter */of/* nnoremap <F5> :w <bar> !colormake -j 3; and make run<CR>
+    autocmd BufNewFile,BufRead,BufEnter */of*/* let g:syntastic_cpp_include_dirs = ['./', '../../../libs/openFrameworks']
+    autocmd BufNewFile,BufRead,BufEnter */of*/* nnoremap <F5> :w <bar> !colormake -j 3; and make run<CR>
 
     " close automatically the Omni-completion tip window after a selection is made
     "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
