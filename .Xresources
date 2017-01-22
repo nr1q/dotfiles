@@ -6,6 +6,11 @@ Xft*dpi:        96
 URxvt*font:     xft:Terminess Powerline:pixelsize=16:antialias=false,xft:Terminus:pixelsize=16:antialias=false
 URxvt*boldFont: xft:Terminess Powerline:pixelsize=16:bold:antialias=false,xft:Terminus:pixelsize=16:bold:antialias=false
 
+!URxvt.font: -*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-1
+!URxvt.boldFont: -*-terminus-bold-r-*-*-16-*-*-*-*-*-iso10646-1
+!URxvt.italicFont: -*-terminus-medium-r-*-*-16-*-*-*-*-*-iso10646-1
+!URxvt.boldItalicFont: -*-terminus-bold-r-*-*-16-*-*-*-*-*-iso10646-1
+
 
 !---------!
 ! Colours !
