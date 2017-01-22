@@ -86,8 +86,8 @@ local layouts =
     --awful.layout.suit.fair,
     --lain.layout.uselessfair,
     --lain.layout.uselessfair.horizontal,
-    lain.layout.uselesspiral,
-    lain.layout.uselesspiral.dwindle,
+    --lain.layout.uselesspiral,
+    --lain.layout.uselesspiral.dwindle,
     awful.layout.suit.max,
     --awful.layout.suit.spiral,
     --awful.layout.suit.spiral.dwindle,
@@ -156,7 +156,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Keyboard widget
 kbdwidget = wibox.widget.textbox()
-kbdwidget:set_markup("  keyboard_<span font_desc='terminus bold 10' color='#fff'>en</span>")
+kbdwidget:set_markup("  keyboard_<span font_desc='terminus (ttf) bold 12' color='#fff'>en</span>")
 
 dbus.request_name("session", "ru.gentoo.kbdd")
 dbus.add_match("session", "interface='ru.gentoo.kbdd',member='layoutChanged'")
@@ -164,25 +164,29 @@ dbus.connect_signal("ru.gentoo.kbdd", function(...)
     local data = {...}
     local layout = data[2]
     lts = {[0] = "en", [1] = "latam"}
-kbdwidget:set_markup("  keyboard_<span font_desc='terminus bold 10' color='#fff'>" .. lts[layout] .. '</span>')
+    kbdwidget:set_markup("  keyboard_<span font_desc='terminus (ttf) bold 12' color='#fff'>" .. lts[layout] .. '</span>')
 end)
 
 
 -- Mail widget
 mailWidget = wibox.widget.textbox()
-mailWidgetTimer = timer({ timeout = 1800 })
 
 function f_mailWidget()
-    mailWidget:set_markup( " mail_<span font_desc='terminus bold 10' color='#fff'>" .. awful.util.pread("/usr/local/bin/maic.py") .. "</span>" )
+    awful.util.spawn_with_shell("dbus-send --session /me/nr1q/mailWidget me.nr1q.mailWidget string:(/usr/local/bin/maic.py)")
 end
 
-mailWidgetTimer:connect_signal("timeout", f_mailWidget)
-mailWidgetTimer:start()
---f_mailWidget() -- check mail now, or wait timeout event
--- TODO use this instead of the above
---mailWidget = lain.widgets.imap({server='imap.openmailbox.org',
-                                --mail='nrq@openmailbox.org',
-                                --password='pass Nrq/opmbx'})
+mailTimerDbus = timer({ timeout = 1800 })
+mailTimerDbus:connect_signal("timeout", f_mailWidget)
+mailTimerDbus:start()
+
+dbus.request_name("session", "me.nr1q.mailWidget")
+dbus.add_match("session", "interface='me.nr1q',member='mailWidget'")
+dbus.connect_signal("me.nr1q", function(...)
+  local data = {...}
+  local dbustext = data[2]
+  mailWidget:set_markup( " mail_<span font_desc='terminus (ttf) bold 12' color='#fff'>" .. dbustext .. "</span>" )
+end)
+f_mailWidget() -- check mail now
 
 -- Battery
 mybattery = wibox.widget.textbox()
@@ -204,13 +208,13 @@ vicious.register(mybattery, vicious.widgets.bat, function(widget, args)
                      --text = "Ya puede desconectar el ordenador",
                      --timeout = 20 })
   end
-  return "  battery_<span font_desc='terminus bold 10' color='#fff'>" .. args[2] .. '</span>'
+  return "  battery_<span font_desc='terminus (ttf) bold 12' color='#fff'>" .. args[2] .. '</span>'
 end, 15, "BAT0")
 
 -- Temperature
 tempwidget = wibox.widget.textbox()
 vicious.register(tempwidget, vicious.widgets.thermal,
-                "  temp_<span font_desc='terminus bold 10' color='#fff'>$1</span>",
+                "  temp_<span font_desc='terminus (ttf) bold 12' color='#fff'>$1</span>",
                 15,
                 'thermal_zone0')
 
@@ -219,7 +223,7 @@ myvolume = wibox.widget.textbox()
 vicious.register(myvolume, vicious.widgets.volume, function(widget, args)
   local muted = ' '
   if args[2] ~= '♫' then muted = '_muted ' end
-  return "  volume_<span font_desc='terminus bold 10' color='#fff'>" .. args[1] .. muted .. '</span>'
+  return "  volume_<span font_desc='terminus (ttf) bold 12' color='#fff'>" .. args[1] .. muted .. '</span>'
 end, 0.2, "Master")
 -- }}}
 
@@ -261,7 +265,7 @@ click this box to close'
 
   naughty.notify({
     position = 'bottom_right',
-    font = 'terminus 12',
+    font = 'terminus (ttf) 12',
     title = "Awesome WM Cheat Sheet",
     bg = '#000000e0',
     timeout = 0,
@@ -435,7 +439,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     -- Mail fetching
-    awful.key({ modkey, "Control" }, "h",     function() mailWidgetTimer:emit_signal("timeout") end),
+    awful.key({ modkey, "Control" }, "h",     function() mailTimerDbus:emit_signal("timeout") end),
 
     -- Screensaver
     awful.key({ }, "XF86ScreenSaver",         function () awful.util.spawn('electricsheep') end),
@@ -446,12 +450,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey },            "c",     function () display_awesome_cheatsheet() end),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey },            "r",     function ()
+      mypromptbox[mouse.screen.index]:run()
+    end),
 
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
+                  mypromptbox[mouse.screen.index].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
               end),
