@@ -69,12 +69,16 @@ abbr vre 'vagrant reload'
 abbr vss 'vagrant ssh'
 abbr vsu 'vagrant suspend'
 
+alias rg 'ranger'
+alias irg 'iranger'
+alias crg 'cranger'
+
 # ranger with image preview (non-ascii)
 alias iranger 'ranger --cmd="set preview_images true"'
 
 function cranger --description 'Keep last directory on exit'
     set -l tempfile '/tmp/ranger-choosedir'
-    /usr/bin/ranger --choosedir=/tmp/ranger-choosedir
+    /usr/bin/ranger --choosedir=/tmp/ranger-choosedir $argv
     if test -f $tempfile; and test (cat $tempfile) != (echo -n (pwd))
         cd (cat $tempfile)
     end
